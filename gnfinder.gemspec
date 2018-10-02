@@ -1,0 +1,25 @@
+$:.push File.expand_path('../lib', __FILE__)
+
+require 'gnfinder/version'
+
+Gem::Specification.new do |gem|
+  gem.name = 'gnfinder'
+  gem.homepage = 'http://github.com/GlobalNamesArchitecture/gnfinder'
+  gem.version = Gnfinder::VERSION
+  gem.authors = ['Dmitry Mozzherin']
+  gem.license = 'MIT'
+  gem.summary = 'Scientific names finder'
+  gem.description = %q|The gem searches for scientific names in texts using
+                     gRPC server running gnfinder written in Go language|
+  gem.email = 'dmozzherin@gmail.com'
+
+  gem.files = `git ls-files`.split('\n')
+  gem.require_paths = ['lib']
+  gem.add_development_dependency 'rake', '~> 12.3'
+  gem.add_development_dependency 'rspec', '~> 3.8'
+  gem.add_development_dependency 'bundler', '~> 1.16'
+  gem.add_development_dependency 'byebug', '~> 10.0'
+  gem.add_development_dependency 'grpc', '~> 1.15'
+  gem.add_development_dependency 'grpc-tools', '~> 1.15'
+end
+
