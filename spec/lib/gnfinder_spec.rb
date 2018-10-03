@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Gnfinder do
   describe '.version' do
     it 'shows version' do

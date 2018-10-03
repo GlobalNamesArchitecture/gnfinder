@@ -9,9 +9,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
   add_message "protob.Void" do
   end
-  add_message "protob.WithText" do
-    optional :value, :bool, 1
-  end
   add_message "protob.WithDetails" do
     optional :value, :bool, 1
   end
@@ -21,8 +18,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "protob.WithVerification" do
     optional :value, :bool, 1
   end
-  add_message "protob.Opts" do
-    optional :with_text, :message, 1, "protob.WithText"
+  add_message "protob.Params" do
+    optional :text, :bytes, 1
     optional :with_details, :message, 2, "protob.WithDetails"
     optional :language, :message, 3, "protob.WithLanguage"
     optional :with_verification, :message, 4, "protob.WithVerification"
@@ -54,11 +51,10 @@ end
 module Protob
   Pong = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Pong").msgclass
   Void = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Void").msgclass
-  WithText = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.WithText").msgclass
   WithDetails = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.WithDetails").msgclass
   WithLanguage = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.WithLanguage").msgclass
   WithVerification = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.WithVerification").msgclass
-  Opts = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Opts").msgclass
+  Params = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Params").msgclass
   NameStrings = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.NameStrings").msgclass
   NameString = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.NameString").msgclass
   MatchType = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.MatchType").enummodule

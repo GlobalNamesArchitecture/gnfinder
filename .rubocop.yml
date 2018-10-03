@@ -1,2 +1,7 @@
+AllCops:
+  TargetRubyVersion: 2.5
+  Exclude:
+    - 'lib/protob_pb.rb'
+    - 'lib/protob_services_pb.rb'
 Style/StringLiterals:
   EnforcedStyle: single_quotes

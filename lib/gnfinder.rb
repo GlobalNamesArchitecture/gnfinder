@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'gnfinder/version'
 require_relative 'protob_pb.rb'
 require_relative 'protob_services_pb.rb'

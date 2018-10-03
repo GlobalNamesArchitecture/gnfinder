@@ -16,8 +16,7 @@ go get github.com/gnames/gnfinder
 Then you need to run bundle from the root of the project and run:
 
 ```bash
-grpc_tools_ruby_protoc -I $GOPATH/src/github.com/gnames/gnfinder/protob \ --ruby_out=lib --grpc_out=lib \
-$GOPATH/src/github.com/gnames/gnfinder/protob/protob.proto
+rake grpc
 ```
 
 [gnfinder]: https://github.com/gnames/gnfinder

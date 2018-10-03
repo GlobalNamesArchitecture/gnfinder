@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 require 'rubygems'
 require 'bundler'
-require "bundler/gem_tasks"
+require 'bundler/gem_tasks'
 
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
-  $stderr.puts e.message
-  $stderr.puts "Run `bundle install` to install missing gems"
+  warn e.message
+  warn 'Run `bundle install` to install missing gems'
   exit e.status_code
 end
 require 'rake'
@@ -22,5 +24,16 @@ RSpec::Core::RakeTask.new(:rcov) do |spec|
   spec.rcov = true
 end
 
-task :default => :spec
+task :grpc do
+  cmd = 'grpc_tools_ruby_protoc ' \
+        '-I $GOPATH/src/github.com/gnames/gnfinder/protob ' \
+        '--ruby_out=lib --grpc_out=lib ' \
+        '$GOPATH/src/github.com/gnames/gnfinder/protob/protob.proto'
+  puts cmd
+  `#{cmd}`
+end
 
+require 'rubocop/rake_task'
+RuboCop::RakeTask.new
+
+task default: %i[rubocop grpc spec]

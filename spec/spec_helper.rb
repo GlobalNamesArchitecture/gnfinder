@@ -1,2 +1,4 @@
-require "rspec"
-require "gnfinder"
+# frozen_string_literal: true
+
+require 'rspec'
+require 'gnfinder'

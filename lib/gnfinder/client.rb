@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Gnfinder
   # Gnfinder::Client connects to gnfinder server
   class Client
@@ -9,6 +11,10 @@ module Gnfinder
 
     def ping
       @stub.ping(Protob::Void.new).value
+    end
+
+    def find_names
+      @stub.find_names(Protob::Params.new(text: 'It is Pardosa moesta!')).names
     end
   end
 end
