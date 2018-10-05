@@ -9,20 +9,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
   add_message "protob.Void" do
   end
-  add_message "protob.WithDetails" do
-    optional :value, :bool, 1
-  end
-  add_message "protob.WithLanguage" do
-    optional :value, :string, 1
-  end
-  add_message "protob.WithVerification" do
-    optional :value, :bool, 1
-  end
   add_message "protob.Params" do
     optional :text, :bytes, 1
-    optional :with_details, :message, 2, "protob.WithDetails"
-    optional :language, :message, 3, "protob.WithLanguage"
-    optional :with_verification, :message, 4, "protob.WithVerification"
+    optional :with_bayes, :bool, 3
+    optional :language, :string, 4
   end
   add_message "protob.NameStrings" do
     optional :text, :bytes, 3
@@ -30,13 +20,14 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
   add_message "protob.NameString" do
     optional :value, :string, 1
-    optional :odds, :float, 2
-    optional :path, :string, 3
-    optional :curated, :bool, 4
-    optional :edit_distance, :int32, 5
-    optional :edit_distance_stem, :int32, 6
-    optional :source_id, :int32, 7
-    optional :match, :enum, 8, "protob.MatchType"
+    optional :verbatim, :string, 2
+    optional :odds, :float, 3
+    optional :path, :string, 4
+    optional :curated, :bool, 5
+    optional :edit_distance, :int32, 6
+    optional :edit_distance_stem, :int32, 7
+    optional :source_id, :int32, 8
+    optional :match, :enum, 9, "protob.MatchType"
   end
   add_enum "protob.MatchType" do
     value :NONE, 0
@@ -51,9 +42,6 @@ end
 module Protob
   Pong = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Pong").msgclass
   Void = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Void").msgclass
-  WithDetails = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.WithDetails").msgclass
-  WithLanguage = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.WithLanguage").msgclass
-  WithVerification = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.WithVerification").msgclass
   Params = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Params").msgclass
   NameStrings = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.NameStrings").msgclass
   NameString = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.NameString").msgclass
