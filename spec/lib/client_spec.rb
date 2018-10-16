@@ -47,5 +47,11 @@ describe Gnfinder::Client do
       names = subject.find_names('Pardosa moesta is a spider', opts)
       expect(names[0].odds).to eq 0.0
     end
+
+    it 'supports verification option' do
+      opts = { with_verification: true, language: 'eng' }
+      names = subject.find_names('Pardosa moesta is a spider', opts)
+      expect(names[0].match).to eq :CANONICAL_EXACT
+    end
   end
 end

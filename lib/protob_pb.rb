@@ -13,6 +13,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :text, :bytes, 1
     optional :with_bayes, :bool, 3
     optional :language, :string, 4
+    optional :with_verification, :bool, 5
+    repeated :sources, :int32, 6
   end
   add_message "protob.NameStrings" do
     optional :text, :bytes, 3

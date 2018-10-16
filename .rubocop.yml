@@ -5,3 +5,6 @@ AllCops:
     - 'lib/protob_services_pb.rb'
 Style/StringLiterals:
   EnforcedStyle: single_quotes
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
