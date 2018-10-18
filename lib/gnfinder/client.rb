@@ -12,7 +12,7 @@ module Gnfinder
       @stub.ping(Protob::Void.new).value
     end
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
     def find_names(text, opts = {})
       raise 'Text cannot be empty' if text.to_s.strip == ''
 
@@ -20,9 +20,12 @@ module Gnfinder
       params[:with_bayes] = true if opts[:with_bayes]
       params[:language] = opts[:language] if opts[:language].to_s.strip != ''
       params[:with_verification] = true if opts[:with_verification]
+      if opts[:sources] && !opts[:sources].empty?
+        params[:sources] = opts[:sources]
+      end
 
       @stub.find_names(Protob::Params.new(params)).names
     end
-    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
   end
 end
