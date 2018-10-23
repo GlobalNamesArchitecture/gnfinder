@@ -12,10 +12,13 @@ Gem::Specification.new do |gem|
   gem.license = 'MIT'
   gem.summary = 'Scientific names finder'
   gem.description = %(The gem searches for scientific names in texts using
-                     gRPC server running gnfinder written in Go language)
+                     gRPC server running gnfinder app written in Go language)
   gem.email = 'dmozzherin@gmail.com'
 
-  gem.files = `git ls-files`.split('\n')
+  gem.files         = `git ls-files -z`
+                      .split("\x0")
+                      .reject { |f| f.match(%r{^(test|spec|features)/}) }
+
   gem.require_paths = ['lib']
   gem.required_ruby_version = '~> 2.5'
   gem.add_development_dependency 'bundler', '~> 1.16'
