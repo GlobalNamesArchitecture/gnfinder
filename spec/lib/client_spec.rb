@@ -59,5 +59,11 @@ describe Gnfinder::Client do
       names = subject.find_names('Pardosa moesta is a spider', opts)
       expect(names[0].sources_result[0].title).to eq 'Catalogue of Life'
     end
+
+    it 'returns the position of a name in a text' do
+      names = subject.find_names('Pardosa moesta is a spider')
+      expect(names[0].offset_start).to eq 0
+      expect(names[0].offset_end).to eq 14
+    end
   end
 end

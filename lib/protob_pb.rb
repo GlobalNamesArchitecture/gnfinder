@@ -30,7 +30,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :edit_distance_stem, :int32, 7
     optional :source_id, :int32, 8
     optional :match, :enum, 9, "protob.MatchType"
-    repeated :sources_result, :message, 10, "protob.SourceResult"
+    optional :offset_start, :int32, 10
+    optional :offset_end, :int32, 11
+    repeated :sources_result, :message, 12, "protob.SourceResult"
   end
   add_message "protob.SourceResult" do
     optional :source_id, :int32, 1
