@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+## [v0.1.1]
+- Add [#6]: return start and end of names-strings
+
 ## [v0.1.0]
 
 - Add [#5]: add an optional list of preferred data-sources for verification
@@ -14,8 +17,10 @@
 
 This document follows [changelog guidelines]
 
+[v0.1.1]: https://github.com/GlobalNamesArchitecture/gnfinder/compare/v0.1.0...v0.1.1
 [v0.1.0]: https://github.com/GlobalNamesArchitecture/gnfinder/tree/v0.1.0
 
+[#6]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/5
 [#5]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/5
 [#4]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/4
 [#3]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/3
