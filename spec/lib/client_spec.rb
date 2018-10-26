@@ -65,5 +65,10 @@ describe Gnfinder::Client do
       expect(names[0].offset_start).to eq 0
       expect(names[0].offset_end).to eq 14
     end
+
+    it 'works with utf8 text' do
+      names = subject.find_names('Pedicia apusenica (Ujvárosi and Starý 2003)')
+      expect(names[0].value).to eq 'Pedicia apusenica'
+    end
   end
 end

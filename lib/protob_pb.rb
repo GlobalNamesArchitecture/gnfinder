@@ -10,7 +10,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "protob.Void" do
   end
   add_message "protob.Params" do
-    optional :text, :bytes, 1
+    optional :text, :string, 1
     optional :with_bayes, :bool, 3
     optional :language, :string, 4
     optional :with_verification, :bool, 5
