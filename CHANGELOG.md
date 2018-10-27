@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [v0.1.2]
+
+- Fix [#7]: utf-8 diacritics support in input text fails
+
 ## [v0.1.1]
 - Add [#6]: return start and end of names-strings
 
