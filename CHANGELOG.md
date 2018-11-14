@@ -2,20 +2,24 @@
 
 ## Unreleased
 
+## [v0.1.3]
+
+- Fix [#8]: gRPC output is similar to CLI output for gnfinder.
+
 ## [v0.1.2]
 
-- Fix [#7]: utf-8 diacritics support in input text fails
+- Fix [#7]: utf-8 diacritics support in input text fails.
 
 ## [v0.1.1]
-- Add [#6]: return start and end of names-strings
+- Add [#6]: return start and end of names-strings.
 
 ## [v0.1.0]
 
-- Add [#5]: add an optional list of preferred data-sources for verification
-- Add [#4]: add an option for verification of found names
-- Add [#3]: enable sending options to gRPC service
-- Add [#2]: send a text and receive found names
-- Add [#1]: connect to gRPC server of `gnfinder` Go-lang program
+- Add [#5]: add an optional list of preferred data-sources for verification.
+- Add [#4]: add an option for verification of found names.
+- Add [#3]: enable sending options to gRPC service.
+- Add [#2]: send a text and receive found names.
+- Add [#1]: connect to gRPC server of `gnfinder` Go-lang program.
 
 ## Footnotes
 
