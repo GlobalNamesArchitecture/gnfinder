@@ -13,7 +13,7 @@ describe Gnfinder::Client do
   describe '#find_names' do
     it 'returns list of name_strings' do
       names = subject.find_names('Pardosa moesta is a spider')
-      expect(names[0].value).to eq 'Pardosa moesta'
+      expect(names[0].name).to eq 'Pardosa moesta'
       expect(names[0].verbatim).to eq 'Pardosa moesta'
     end
 
@@ -51,13 +51,17 @@ describe Gnfinder::Client do
     it 'supports verification option' do
       opts = { with_verification: true, language: 'eng' }
       names = subject.find_names('Pardosa moesta is a spider', opts)
-      expect(names[0].match).to eq :CANONICAL_EXACT
+      expect(names[0].verification.match_type).to eq :EXACT
     end
 
     it 'supports verification with sources' do
       opts = { with_verification: true, sources: [1, 4], language: 'eng' }
       names = subject.find_names('Pardosa moesta is a spider', opts)
-      expect(names[0].sources_result[0].title).to eq 'Catalogue of Life'
+      expect(names[0].verification.preferred_results[0].data_source_title)
+        .to eq 'Catalogue of Life'
+      expect(names[0].verification.preferred_results[1].data_source_title)
+        .to eq 'NCBI'
+      expect(names[0].verification.data_source_title).to eq 'Catalogue of Life'
     end
 
     it 'returns the position of a name in a text' do
@@ -68,7 +72,7 @@ describe Gnfinder::Client do
 
     it 'works with utf8 text' do
       names = subject.find_names('Pedicia apusenica (Ujvárosi and Starý 2003)')
-      expect(names[0].value).to eq 'Pedicia apusenica'
+      expect(names[0].name).to eq 'Pedicia apusenica'
     end
   end
 end

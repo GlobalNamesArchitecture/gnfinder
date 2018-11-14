@@ -17,36 +17,49 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     repeated :sources, :int32, 6
   end
   add_message "protob.NameStrings" do
-    optional :text, :bytes, 3
+    optional :date, :string, 1
+    optional :language, :string, 2
+    optional :total_tokens, :int32, 3
+    optional :total_candidates, :int32, 4
+    optional :total_names, :int32, 5
     repeated :names, :message, 6, "protob.NameString"
   end
   add_message "protob.NameString" do
-    optional :value, :string, 1
+    optional :type, :string, 1
     optional :verbatim, :string, 2
-    optional :odds, :float, 3
-    optional :path, :string, 4
-    optional :curated, :bool, 5
-    optional :edit_distance, :int32, 6
-    optional :edit_distance_stem, :int32, 7
-    optional :source_id, :int32, 8
-    optional :match, :enum, 9, "protob.MatchType"
-    optional :offset_start, :int32, 10
-    optional :offset_end, :int32, 11
-    repeated :sources_result, :message, 12, "protob.SourceResult"
+    optional :name, :string, 3
+    optional :odds, :float, 4
+    optional :offset_start, :int32, 5
+    optional :offset_end, :int32, 6
+    optional :verification, :message, 7, "protob.Verification"
   end
-  add_message "protob.SourceResult" do
-    optional :source_id, :int32, 1
-    optional :title, :string, 2
+  add_message "protob.Verification" do
+    optional :data_source_id, :int32, 1
+    optional :data_source_title, :string, 2
+    optional :matched_name, :string, 3
+    optional :current_name, :string, 4
+    optional :classification_path, :string, 5
+    optional :databases_num, :int32, 6
+    optional :data_source_quality, :string, 7
+    optional :edit_distance, :int32, 8
+    optional :stem_edit_distance, :int32, 9
+    optional :match_type, :enum, 11, "protob.MatchType"
+    optional :error, :string, 12
+    repeated :preferred_results, :message, 13, "protob.PreferredResult"
+  end
+  add_message "protob.PreferredResult" do
+    optional :data_source_id, :int32, 1
+    optional :data_source_title, :string, 2
     optional :name_id, :string, 3
-    optional :taxon_id, :string, 4
+    optional :name, :string, 4
+    optional :taxon_id, :string, 5
   end
   add_enum "protob.MatchType" do
     value :NONE, 0
     value :EXACT, 1
-    value :CANONICAL_EXACT, 2
-    value :CANONICAL_FUZZY, 3
-    value :PARTIAL_EXACT, 4
-    value :PARTIAL_FUZZY, 5
+    value :FUZZY, 2
+    value :PARTIAL_EXACT, 3
+    value :PARTIAL_FUZZY, 4
   end
 end
 
@@ -56,6 +69,7 @@ module Protob
   Params = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Params").msgclass
   NameStrings = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.NameStrings").msgclass
   NameString = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.NameString").msgclass
-  SourceResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.SourceResult").msgclass
+  Verification = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Verification").msgclass
+  PreferredResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.PreferredResult").msgclass
   MatchType = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.MatchType").enummodule
 end
