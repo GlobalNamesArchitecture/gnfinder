@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [v0.2.0]
+
+- Compatibility with gnfinder v0.7.0
+
 ## [v0.1.3]
 
 - Fix [#8]: gRPC output is similar to CLI output for gnfinder.
