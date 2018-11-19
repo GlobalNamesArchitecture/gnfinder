@@ -39,7 +39,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :matched_name, :string, 3
     optional :current_name, :string, 4
     optional :classification_path, :string, 5
-    optional :databases_num, :int32, 6
+    optional :data_sources_num, :int32, 6
     optional :data_source_quality, :string, 7
     optional :edit_distance, :int32, 8
     optional :stem_edit_distance, :int32, 9

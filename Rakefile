@@ -26,9 +26,9 @@ end
 
 task :grpc do
   cmd = 'grpc_tools_ruby_protoc ' \
-        '-I $GOPATH/src/github.com/gnames/gnfinder/protob ' \
+        '-I $HOME/code/go/gnfinder/protob ' \
         '--ruby_out=lib --grpc_out=lib ' \
-        '$GOPATH/src/github.com/gnames/gnfinder/protob/protob.proto'
+        '$HOME/code/go/gnfinder/protob/protob.proto'
   puts cmd
   `#{cmd}`
 end
