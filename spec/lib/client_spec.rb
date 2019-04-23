@@ -51,7 +51,7 @@ describe Gnfinder::Client do
     it 'supports verification option' do
       opts = { with_verification: true, language: 'eng' }
       names = subject.find_names('Pardosa moesta is a spider', opts)
-      expect(names[0].verification.match_type).to eq :EXACT
+      expect(names[0].verification.best_result.match_type).to eq :EXACT
     end
 
     it 'supports verification with sources' do
@@ -61,7 +61,8 @@ describe Gnfinder::Client do
         .to eq 'Catalogue of Life'
       expect(names[0].verification.preferred_results[1].data_source_title)
         .to eq 'NCBI'
-      expect(names[0].verification.data_source_title).to eq 'Catalogue of Life'
+      expect(names[0].verification.best_result.data_source_title)
+        .to eq 'Catalogue of Life'
     end
 
     it 'returns the position of a name in a text' do

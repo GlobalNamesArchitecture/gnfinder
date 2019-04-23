@@ -34,25 +34,27 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :verification, :message, 7, "protob.Verification"
   end
   add_message "protob.Verification" do
-    optional :data_source_id, :int32, 1
-    optional :data_source_title, :string, 2
-    optional :matched_name, :string, 3
-    optional :current_name, :string, 4
-    optional :classification_path, :string, 5
-    optional :data_sources_num, :int32, 6
-    optional :data_source_quality, :string, 7
-    optional :edit_distance, :int32, 8
-    optional :stem_edit_distance, :int32, 9
-    optional :match_type, :enum, 11, "protob.MatchType"
-    optional :error, :string, 12
-    repeated :preferred_results, :message, 13, "protob.PreferredResult"
+    optional :best_result, :message, 1, "protob.ResultData"
+    repeated :preferred_results, :message, 2, "protob.ResultData"
+    optional :data_sources_num, :int32, 3
+    optional :data_source_quality, :string, 4
+    optional :retries, :int32, 5
+    optional :error, :string, 6
   end
-  add_message "protob.PreferredResult" do
+  add_message "protob.ResultData" do
     optional :data_source_id, :int32, 1
     optional :data_source_title, :string, 2
-    optional :name_id, :string, 3
-    optional :name, :string, 4
-    optional :taxon_id, :string, 5
+    optional :taxon_id, :string, 3
+    optional :matched_name, :string, 4
+    optional :matched_canonical, :string, 5
+    optional :current_name, :string, 6
+    optional :synonym, :bool, 7
+    optional :classification_path, :string, 8
+    optional :classification_rank, :string, 9
+    optional :classification_ids, :string, 10
+    optional :edit_distance, :int32, 11
+    optional :stem_edit_distance, :int32, 12
+    optional :match_type, :enum, 13, "protob.MatchType"
   end
   add_enum "protob.MatchType" do
     value :NONE, 0
@@ -70,6 +72,6 @@ module Protob
   NameStrings = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.NameStrings").msgclass
   NameString = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.NameString").msgclass
   Verification = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Verification").msgclass
-  PreferredResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.PreferredResult").msgclass
+  ResultData = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.ResultData").msgclass
   MatchType = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.MatchType").enummodule
 end
