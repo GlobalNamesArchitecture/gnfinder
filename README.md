@@ -43,10 +43,10 @@ require 'gnfinder'
 
 # you can use global public gnfinder server
 # located at finder-rpc.globalnames.org
-gf = Gnfinder::Client.new(host: 'finder-rpc.globalnames.org', port: 80)
+gf = Gnfinder::Client.new(host = 'finder-rpc.globalnames.org', port = 80)
 
 # localhost, different port
-gf = Gnfinder::Client.new(host: '0.0.0.0', port: 8000)
+gf = Gnfinder::Client.new(host = '0.0.0.0', port = 8000)
 ```
 
 ### Finding names in a text using default settings
