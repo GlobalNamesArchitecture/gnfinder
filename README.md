@@ -28,7 +28,7 @@ the original Go-lang [gnfinder] README file.
 First you need to create a instance of a `gnfinder` client
 
 ```ruby
-import 'gnfinder'
+require 'gnfinder'
 
 gf = Gnfinder::Client.new
 ```
@@ -39,7 +39,7 @@ have another location for the server use:
 
 
 ```
-import 'gnfinder'
+require 'gnfinder'
 
 # you can use global public gnfinder server
 # located at finder-rpc.globalnames.org
