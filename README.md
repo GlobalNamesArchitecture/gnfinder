@@ -28,7 +28,7 @@ the original Go-lang [gnfinder] README file.
 First you need to create a instance of a `gnfinder` client
 
 ```ruby
-import 'gnfinder'
+require 'gnfinder'
 
 gf = Gnfinder::Client.new
 ```
@@ -37,8 +37,9 @@ By default the client will try to connect to `localhost:8778`. If you
 have another location for the server use:
 
 ```
-import 'gnfinder'
-gf = Gnfinder.new(host: 123.123.123.123, port: 8000)
+require 'gnfinder'
+
+gf = Gnfinder::Client.new(host: 123.123.123.123, port: 8000)
 ```
 
 ### Finding names in a text using default settings
