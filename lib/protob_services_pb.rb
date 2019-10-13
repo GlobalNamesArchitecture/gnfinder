@@ -15,7 +15,8 @@ module Protob
       self.service_name = 'protob.GNFinder'
 
       rpc :Ping, Void, Pong
-      rpc :FindNames, Params, NameStrings
+      rpc :Ver, Void, Version
+      rpc :FindNames, Params, Output
     end
 
     Stub = Service.rpc_stub_class

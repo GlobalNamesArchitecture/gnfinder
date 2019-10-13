@@ -4,6 +4,18 @@ Ruby gem to access functionality of [gnfinder] project written in Go. This gem
 allows to perform fast and accurate scientific name finding in UTF-8 encoded
 plain texts for Ruby-based projects.
 
+- [gnfinder](#gnfinder)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Finding names in a text using default settings](#finding-names-in-a-text-using-default-settings)
+    - [Optionally disable Bayes search](#optionally-disable-bayes-search)
+    - [Set a language for the text](#set-a-language-for-the-text)
+  - [Set automatic detection of text's language](#set-automatic-detection-of-texts-language)
+    - [Set verification option](#set-verification-option)
+    - [Set preferred data-sources list](#set-preferred-data-sources-list)
+    - [Combination of parameters.](#combination-of-parameters)
+  - [Development](#development)
 
 ## Requirements
 
@@ -38,7 +50,7 @@ have another location for the server use:
 
 
 
-```
+```ruby
 require 'gnfinder'
 
 # you can use global public gnfinder server
@@ -51,53 +63,63 @@ gf = Gnfinder::Client.new(host = '0.0.0.0', port = 8000)
 
 ### Finding names in a text using default settings
 
+You can find format of returning result in [proto file] or in [tests]
+
 ```ruby
 txt = File.read('utf8-text-with-names.txt')
 
-names = gf.find_names(txt)
-puts names[0].value
-puts names[0].odds
+res = gf.find_names(txt)
+puts res.names[0].value
+puts res.names[0].odds
 ```
 
 Returned result will have the following methods for each name:
 
-  * value: mame-string cleaned up for verification.
+  * value: name-string cleaned up for verification.
   * verbatim: name-string as it was found in the text.
   * odds: Bayes' odds value. For example odds 0.1 would mean that according to
     the algorithm there is 1 chance out of 10 that the name-string is
     a scientific name. This field will be empty if Bayes algorithms did not run.
 
-### Always enable Bayes search
+### Optionally disable Bayes search
 
-For languages that are not supported by [gnfinder] only heuristic algorithms
-are used by default, because some languages that are close to Latin (Italian,
-French, Portugese) would generate too many false positives. However you can
-override this default setting by running:
+Some languages that are close to Latin (Italian, French, Portugese) would
+generate too many false positives. To decrease amount of false positives you
+can disable Bayes algorithm by running:
 
 ```ruby
-names = gf.find_names(txt, with_bayes: true)
+names = gf.find_names(txt, no_bayes: true).names
 ```
 
 ### Set a language for the text
 
-Sometimes gnfinder cannot determine the language of a text correctly. For
-example it happens when the text mostly consists of scientific names, or has
-large citations or list of references in a different language. It is possible
-to set a language for a text by hand. For supported languages
-(English and German) it will enable Bayes algorithm. For other languages
-this setting will be ignored.
+It is possible to supply the prevalent language to set a language for a text
+by hand. That might Bayes algorithms work better
 
 List of supported languages will increase with time.
 
 ```ruby
-names = gf.find_names(txt, language: 'eng')
-names = gf.find_names(txt, language: 'deu')
+res = gf.find_names(txt, language: 'eng')
+puts res.language
+res = gf.find_names(txt, language: 'deu')
+puts res.language
 
-# setting is ignored, only known by gnfinder
-# 3-character notations iso-639-2 code are supported
-names = gf.find_names(txt, language: 'english')
-names = gf.find_names(txt, language: 'rus')
+# Setting is ignored if language string is not known by gnfinder.
+# Only 3-character notations iso-639-2 code are supported
+res = gf.find_names(txt, language: 'rus')
+puts res.language
 ```
+## Set automatic detection of text's language
+
+To enable automatic detection of prevalent language of a text use:
+
+res = gf.find_names(txt, detect_language: true)
+puts res.language
+puts res.detect_language
+puts res.language_detected
+
+If detected language is not yet supported by Bayes algorithm, default
+language (English) will be used.
 
 ### Set verification option
 
@@ -121,7 +143,7 @@ return the following information:
   * path: the classification path of a matched name (if available)
 
 ```ruby
-names = gf.find_names(txt, with_verification: true)
+res = gf.find_names(txt, verification: true)
 ```
 
 ### Set preferred data-sources list
@@ -132,7 +154,7 @@ data-source (data-sources). There is a parameter that takes IDs from the
 results will be returned back.
 
 ```ruby
-names = gf.find_names(txt, with_verification: true, sources: [1, 4, 179])
+res = gf.find_names(txt, verification: true, sources: [1, 4, 179])
 ```
 ### Combination of parameters.
 
@@ -142,11 +164,11 @@ a particular context. It is silently ignored.
 ```ruby
 # Runs Bayes' algorithms using English training set, runs verification and
 # returns matched results for 3 data-sources if they are available.
-names = gf.find_names(txt, language: eng, with_verification: true,
+res = gf.find_names(txt, language: eng, verification: true,
                            sources: [1, 4, 179])
 
 # Ignores `sources:` settings, because `with_verification` is not set to `true`
-names = gf.find_names(txt, language: eng, sources: [1, 4, 179])
+res = gf.find_names(txt, language: eng, sources: [1, 4, 179])
 ```
 
 ## Development
@@ -191,3 +213,5 @@ bundle exec rspec
 [Go]: https://golang.org/doc/install
 [client]: https://github.com/GlobalNamesArchitecture/gnfinder/blob/master/lib/gnfinder/client.rb
 [data-source list]: http://index.globalnames.org/datasource
+[proto file]: https://github.com/GlobalNamesArchitecture/gnfinder/blob/master/lib/protob_pb.rb
+[tests]: https://github.com/GlobalNamesArchitecture/gnfinder/blob/master/spec/lib/client_spec.rb
