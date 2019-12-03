@@ -117,6 +117,11 @@ describe Gnfinder::Client do
       expect(names[0].name).to eq 'Pedicia apusenica'
     end
 
+    it 'works with empty text' do
+      names = subject.find_names('').names
+      expect(names.size).to eq 0
+    end
+
     it 'gets metadata' do
       res = subject.find_names('Pardosa moesta is a very interesting spider')
       expect(res.date).to match(/[\d]{4}/)

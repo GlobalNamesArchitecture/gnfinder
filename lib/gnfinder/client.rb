@@ -25,7 +25,9 @@ module Gnfinder
 
     # rubocop:disable all
     def find_names(text, opts = {})
-      raise 'Text cannot be empty' if text.to_s.strip == ''
+      if text.to_s.strip == ''
+        return Protob::Output.new
+      end
 
       params = { text: text }
       params[:no_bayes] = true if opts[:no_bayes]
