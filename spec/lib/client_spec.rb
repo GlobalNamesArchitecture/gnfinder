@@ -26,10 +26,18 @@ describe Gnfinder::Client do
     it 'supports no_bayes option' do
       names = subject.find_names('Pardosa moesta is a spider').names
       expect(names[0].odds).to be > 10.0
+      names = subject.find_names(
+        'Falsificus erundiculus var. pridumalus is a spider'
+      ).names
+      expect(names.size).to eq 1
 
       opts = { no_bayes: true }
       names = subject.find_names('Pardosa moesta is a spider', opts).names
       expect(names[0].odds).to eq 0.0
+      names = subject.find_names(
+        'Falsificus erundiculus var. pridumalus is a spider', opts
+      ).names
+      expect(names.size).to eq 0
     end
 
     it 'supports language option' do
