@@ -76,13 +76,13 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
 end
 
 module Protob
-  Void = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Void").msgclass
-  Pong = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Pong").msgclass
-  Version = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Version").msgclass
-  Params = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Params").msgclass
-  Output = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Output").msgclass
-  NameString = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.NameString").msgclass
-  Verification = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Verification").msgclass
-  ResultData = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.ResultData").msgclass
-  MatchType = Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.MatchType").enummodule
+  Void = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Void").msgclass
+  Pong = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Pong").msgclass
+  Version = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Version").msgclass
+  Params = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Params").msgclass
+  Output = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Output").msgclass
+  NameString = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.NameString").msgclass
+  Verification = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Verification").msgclass
+  ResultData = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.ResultData").msgclass
+  MatchType = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.MatchType").enummodule
 end

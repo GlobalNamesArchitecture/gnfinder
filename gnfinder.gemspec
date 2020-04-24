@@ -21,11 +21,11 @@ Gem::Specification.new do |gem|
 
   gem.require_paths = ['lib']
   gem.required_ruby_version = '~> 2.6'
-  gem.add_development_dependency 'bundler', '~> 2.0'
-  gem.add_development_dependency 'byebug', '~> 10.0'
-  gem.add_development_dependency 'grpc', '~> 1.15'
-  gem.add_development_dependency 'grpc-tools', '~> 1.15'
-  gem.add_development_dependency 'rake', '~> 12.3'
-  gem.add_development_dependency 'rspec', '~> 3.8'
-  gem.add_development_dependency 'rubocop', '~> 0.59'
+  gem.add_dependency 'grpc', '~> 1.28'
+  gem.add_dependency 'grpc-tools', '~> 1.28'
+  gem.add_development_dependency 'bundler', '~> 2.1'
+  gem.add_development_dependency 'byebug', '~> 11.1'
+  gem.add_development_dependency 'rake', '~> 13.0'
+  gem.add_development_dependency 'rspec', '~> 3.9'
+  gem.add_development_dependency 'rubocop', '~> 0.82'
 end

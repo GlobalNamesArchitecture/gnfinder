@@ -1,18 +1,29 @@
 # frozen_string_literal: true
 
 module Gnfinder
-  GNFINDER_MIN_VERSION = 'v0.9.0'
+  GNFINDER_MIN_VERSION = 'v0.10.0'
 
   # Gnfinder::Client connects to gnfinder server
   class Client
     def initialize(host = '0.0.0.0', port = '8778')
       @stub = Protob::GNFinder::Stub.new("#{host}:#{port}",
                                          :this_channel_is_insecure)
-      return if gnfinder_version.version >= GNFINDER_MIN_VERSION
+      return if good_gnfinder_version(gnfinder_version.version,
+                                      GNFINDER_MIN_VERSION)
 
       raise 'gRPC server of gnfinder should be at least ' \
             ' #{GNFINDER_MIN_VERSION}.\n Download latest version from ' \
             'https://github.com/gnames/gnfinder/releases/latest.'
+    end
+
+    def good_gnfinder_version(version, min_version)
+      min_ver = min_version[1..].split('.').map(&:to_i)
+      ver = version[1..].split('.').map(&:to_i)
+      return true if ver[0] > min_ver[0] || ver[1] > min_ver[1]
+
+      return true if ver[2] >= min_ver[2]
+
+      false
     end
 
     def gnfinder_version
