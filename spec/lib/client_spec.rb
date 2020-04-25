@@ -32,6 +32,13 @@ describe Gnfinder::Client do
       expect(names[0].verbatim).to eq 'Pardosa moesta'
     end
 
+    it 'finds nomenclatural annotation for a name' do
+      names = subject.find_names('Pardosa moesta sp. n. is a spider').names
+      expect(names[0].name).to eq 'Pardosa moesta'
+      expect(names[0].annot_nomen).to eq 'sp. n.'
+      expect(names[0].annot_nomen_type).to eq :SP_NOV
+    end
+
     it 'supports no_bayes option' do
       names = subject.find_names('Pardosa moesta is a spider').names
       expect(names[0].odds).to be > 10.0
@@ -103,6 +110,15 @@ describe Gnfinder::Client do
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq 'rus'
       expect(res.detect_language).to be true
+    end
+
+    it 'supports tokens around option' do
+      opts = { tokens_around: 2 }
+      names = subject.find_names(
+        'It is very interesting that Pardosa moesta is a spider', opts
+      ).names
+      expect(names[0].words_before).to eq %w[interesting that]
+      expect(names[0].words_after).to eq %w[is a]
     end
 
     it 'supports verification option' do

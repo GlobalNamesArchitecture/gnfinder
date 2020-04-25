@@ -20,7 +20,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :language, :string, 4
       optional :detect_language, :bool, 5
       optional :verification, :bool, 6
-      repeated :sources, :int32, 7
+      optional :tokens_around, :int32, 7
+      repeated :sources, :int32, 8
     end
     add_message "protob.Output" do
       optional :date, :string, 1
@@ -38,9 +39,13 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :verbatim, :string, 2
       optional :name, :string, 3
       optional :odds, :float, 4
-      optional :offset_start, :int32, 5
-      optional :offset_end, :int32, 6
-      optional :verification, :message, 7, "protob.Verification"
+      optional :annot_nomen, :string, 5
+      optional :annot_nomen_type, :enum, 6, "protob.AnnotNomenType"
+      optional :offset_start, :int32, 7
+      optional :offset_end, :int32, 8
+      repeated :words_before, :string, 9
+      repeated :words_after, :string, 10
+      optional :verification, :message, 11, "protob.Verification"
     end
     add_message "protob.Verification" do
       optional :best_result, :message, 1, "protob.ResultData"
@@ -72,6 +77,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :PARTIAL_EXACT, 3
       value :PARTIAL_FUZZY, 4
     end
+    add_enum "protob.AnnotNomenType" do
+      value :NO_ANNOT, 0
+      value :SP_NOV, 1
+      value :COMB_NOV, 2
+      value :SUBSP_NOV, 3
+    end
   end
 end
 
@@ -85,4 +96,5 @@ module Protob
   Verification = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Verification").msgclass
   ResultData = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.ResultData").msgclass
   MatchType = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.MatchType").enummodule
+  AnnotNomenType = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.AnnotNomenType").enummodule
 end

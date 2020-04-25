@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Gnfinder
-  GNFINDER_MIN_VERSION = 'v0.10.0'
+  GNFINDER_MIN_VERSION = 'v0.10.1'
 
   # Gnfinder::Client connects to gnfinder server
   class Client
@@ -49,6 +49,10 @@ module Gnfinder
       params[:verification] = true if opts[:verification]
       if opts[:sources] && !opts[:sources].empty?
         params[:sources] = opts[:sources]
+      end
+
+      if opts[:tokens_around] && opts[:tokens_around] > 0
+          params[:tokens_around] = opts[:tokens_around]
       end
 
       @stub.find_names(Protob::Params.new(params))
