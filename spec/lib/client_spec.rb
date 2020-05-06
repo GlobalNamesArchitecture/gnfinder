@@ -26,10 +26,22 @@ describe Gnfinder::Client do
   end
 
   describe '#find_names' do
+    it 'gets metadata about results' do
+      res = subject.find_names('Pardosa moesta is a spider')
+      expect(res.approach).to eq %i[HEURISTIC BAYES]
+      expect(res.tokens_around).to eq 0
+      opts = { tokens_around: 2 }
+      res = subject.find_names(
+        'It is very interesting that Pardosa moesta is a spider', opts
+      )
+      expect(res.tokens_around).to eq 2
+    end
+
     it 'returns list of name_strings' do
       names = subject.find_names('Pardosa moesta is a spider').names
       expect(names[0].name).to eq 'Pardosa moesta'
       expect(names[0].verbatim).to eq 'Pardosa moesta'
+      expect(names[0].cardinality).to eq 2
     end
 
     it 'finds nomenclatural annotation for a name' do
@@ -125,6 +137,7 @@ describe Gnfinder::Client do
       opts = { verification: true }
       names = subject.find_names('Pardosa moesta is a spider', opts).names
       expect(names[0].verification.best_result.match_type).to eq :EXACT
+      expect(names[0].verification.best_result.matched_cardinality).to eq 2
     end
 
     it 'supports verification with sources' do

@@ -16,36 +16,38 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "protob.Params" do
       optional :text, :string, 1
-      optional :no_bayes, :bool, 3
-      optional :language, :string, 4
-      optional :detect_language, :bool, 5
-      optional :verification, :bool, 6
-      optional :tokens_around, :int32, 7
-      repeated :sources, :int32, 8
+      optional :no_bayes, :bool, 2
+      optional :language, :string, 3
+      optional :detect_language, :bool, 4
+      optional :verification, :bool, 5
+      optional :tokens_around, :int32, 6
+      repeated :sources, :int32, 7
     end
     add_message "protob.Output" do
       optional :date, :string, 1
       optional :finder_version, :string, 2
-      optional :language, :string, 3
-      optional :language_detected, :string, 4
-      optional :detect_language, :bool, 5
-      optional :total_tokens, :int32, 6
-      optional :total_candidates, :int32, 7
-      optional :total_names, :int32, 8
-      repeated :names, :message, 9, "protob.NameString"
+      repeated :approach, :enum, 3, "protob.Approach"
+      optional :tokens_around, :int32, 4
+      optional :language, :string, 5
+      optional :language_detected, :string, 6
+      optional :detect_language, :bool, 7
+      optional :total_tokens, :int32, 8
+      optional :total_candidates, :int32, 9
+      optional :total_names, :int32, 10
+      repeated :names, :message, 11, "protob.NameString"
     end
     add_message "protob.NameString" do
-      optional :type, :string, 1
-      optional :verbatim, :string, 2
-      optional :name, :string, 3
-      optional :odds, :float, 4
-      optional :annot_nomen, :string, 5
-      optional :annot_nomen_type, :enum, 6, "protob.AnnotNomenType"
-      optional :offset_start, :int32, 7
-      optional :offset_end, :int32, 8
-      repeated :words_before, :string, 9
-      repeated :words_after, :string, 10
-      optional :verification, :message, 11, "protob.Verification"
+      optional :cardinality, :int32, 1
+      optional :verbatim, :string, 3
+      optional :name, :string, 4
+      optional :odds, :float, 5
+      optional :annot_nomen, :string, 6
+      optional :annot_nomen_type, :enum, 7, "protob.AnnotNomenType"
+      optional :offset_start, :int32, 8
+      optional :offset_end, :int32, 9
+      repeated :words_before, :string, 10
+      repeated :words_after, :string, 11
+      optional :verification, :message, 12, "protob.Verification"
     end
     add_message "protob.Verification" do
       optional :best_result, :message, 1, "protob.ResultData"
@@ -60,15 +62,20 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :data_source_title, :string, 2
       optional :taxon_id, :string, 3
       optional :matched_name, :string, 4
-      optional :matched_canonical, :string, 5
-      optional :current_name, :string, 6
-      optional :synonym, :bool, 7
-      optional :classification_path, :string, 8
-      optional :classification_rank, :string, 9
-      optional :classification_ids, :string, 10
-      optional :edit_distance, :int32, 11
-      optional :stem_edit_distance, :int32, 12
-      optional :match_type, :enum, 13, "protob.MatchType"
+      optional :matched_cardinality, :int32, 5
+      optional :matched_canonical_simple, :string, 6
+      optional :matched_canonical_full, :string, 7
+      optional :current_name, :string, 8
+      optional :current_cardinality, :int32, 9
+      optional :current_canonical_simple, :string, 10
+      optional :current_canonical_full, :string, 11
+      optional :synonym, :bool, 12
+      optional :classification_path, :string, 13
+      optional :classification_rank, :string, 14
+      optional :classification_ids, :string, 15
+      optional :edit_distance, :int32, 16
+      optional :stem_edit_distance, :int32, 17
+      optional :match_type, :enum, 18, "protob.MatchType"
     end
     add_enum "protob.MatchType" do
       value :NONE, 0
@@ -82,6 +89,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :SP_NOV, 1
       value :COMB_NOV, 2
       value :SUBSP_NOV, 3
+    end
+    add_enum "protob.Approach" do
+      value :HEURISTIC, 0
+      value :BAYES, 1
     end
   end
 end
@@ -97,4 +108,5 @@ module Protob
   ResultData = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.ResultData").msgclass
   MatchType = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.MatchType").enummodule
   AnnotNomenType = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.AnnotNomenType").enummodule
+  Approach = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("protob.Approach").enummodule
 end
