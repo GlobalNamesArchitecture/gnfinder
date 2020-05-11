@@ -164,11 +164,11 @@ a particular context. It is silently ignored.
 ```ruby
 # Runs Bayes' algorithms using English training set, runs verification and
 # returns matched results for 3 data-sources if they are available.
-res = gf.find_names(txt, language: eng, verification: true,
+res = gf.find_names(txt, language: 'eng', verification: true,
                            sources: [1, 4, 179])
 
 # Ignores `sources:` settings, because `with_verification` is not set to `true`
-res = gf.find_names(txt, language: eng, sources: [1, 4, 179])
+res = gf.find_names(txt, language: 'eng', sources: [1, 4, 179])
 ```
 
 ## Development
