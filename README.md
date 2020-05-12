@@ -159,7 +159,7 @@ res = gf.find_names(txt, verification: true, sources: [1, 4, 179])
 ### Combination of parameters.
 
 It is possible to combine parameters. However if a parameter makes no sense in
-a particular context. It is silently ignored.
+a particular context it is silently ignored.
 
 ```ruby
 # Runs Bayes' algorithms using English training set, runs verification and
