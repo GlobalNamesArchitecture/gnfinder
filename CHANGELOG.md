@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [v0.15.4]
+
+- Add [#14]: Compatibility with gnfider v0.15.4, switching to REST API.
+
 ## [v0.2.0]
 
 - Compatibility with gnfinder v0.7.0
@@ -29,10 +33,28 @@
 
 This document follows [changelog guidelines]
 
+[v0.15.4]: https://github.com/GlobalNamesArchitecture/gnfinder/compare/v0.1.0...v0.15.4
+[v0.2.0]: https://github.com/GlobalNamesArchitecture/gnfinder/compare/v0.1.3...v0.2.0
+[v0.1.3]: https://github.com/GlobalNamesArchitecture/gnfinder/compare/v0.1.2...v0.1.3
+[v0.1.2]: https://github.com/GlobalNamesArchitecture/gnfinder/compare/v0.1.1...v0.1.2
 [v0.1.1]: https://github.com/GlobalNamesArchitecture/gnfinder/compare/v0.1.0...v0.1.1
 [v0.1.0]: https://github.com/GlobalNamesArchitecture/gnfinder/tree/v0.1.0
 
-[#6]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/5
+[#20]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/20
+[#19]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/19
+[#18]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/18
+[#17]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/17
+[#16]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/16
+[#15]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/15
+[#14]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/14
+[#13]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/13
+[#12]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/12
+[#11]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/11
+[#10]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/10
+[#9]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/9
+[#8]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/8
+[#7]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/7
+[#6]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/6
 [#5]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/5
 [#4]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/4
 [#3]: https://github.com/GlobalNamesArchitecture/gnfinder/issues/3

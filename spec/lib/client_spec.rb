@@ -16,25 +16,15 @@ describe Gnfinder::Client do
     end
   end
 
-  describe '#good_gnfinder_version' do
-    it 'returns true if gnfinder version is equal or bigger than min version' do
-      expect(subject.good_gnfinder_version('v0.0.0', 'v0.0.0')).to be true
-      expect(subject.good_gnfinder_version('v0.10.0', 'v0.8.1')).to be true
-      expect(subject.good_gnfinder_version('v0.10.0', 'v0.10.0')).to be true
-      expect(subject.good_gnfinder_version('v0.10.0', 'v0.10.1')).to be false
-    end
-  end
-
   describe '#find_names' do
     it 'gets metadata about results' do
       res = subject.find_names('Pardosa moesta is a spider')
-      expect(res.approach).to eq %i[HEURISTIC BAYES]
-      expect(res.tokens_around).to eq 0
-      opts = { tokens_around: 2 }
+      expect(res.words_around).to eq 0
+      opts = { words_around: 2 }
       res = subject.find_names(
         'It is very interesting that Pardosa moesta is a spider', opts
       )
-      expect(res.tokens_around).to eq 2
+      expect(res.words_around).to eq 2
     end
 
     it 'returns list of name_strings' do
@@ -47,13 +37,13 @@ describe Gnfinder::Client do
     it 'finds nomenclatural annotation for a name' do
       names = subject.find_names('Pardosa moesta sp. n. is a spider').names
       expect(names[0].name).to eq 'Pardosa moesta'
-      expect(names[0].annot_nomen).to eq 'sp. n.'
-      expect(names[0].annot_nomen_type).to eq :SP_NOV
+      expect(names[0].annotation_nomen).to eq 'sp. n.'
+      expect(names[0].annotation_nomen_type).to eq 'SP_NOV'
     end
 
     it 'supports no_bayes option' do
       names = subject.find_names('Pardosa moesta is a spider').names
-      expect(names[0].odds).to be > 10.0
+      expect(names[0].odds_log10).to be > 2.0
       names = subject.find_names(
         'Falsificus erundiculus var. pridumalus is a spider'
       ).names
@@ -61,7 +51,7 @@ describe Gnfinder::Client do
 
       opts = { no_bayes: true }
       names = subject.find_names('Pardosa moesta is a spider', opts).names
-      expect(names[0].odds).to eq 0.0
+      expect(names[0].odds_log10).to eq nil
       names = subject.find_names(
         'Falsificus erundiculus var. pridumalus is a spider', opts
       ).names
@@ -71,36 +61,36 @@ describe Gnfinder::Client do
     it 'supports language option' do
       res = subject.find_names('Pardosa moesta is a spider')
       expect(res.language).to eq 'eng'
-      expect(res.language_detected).to eq ''
+      expect(res.language_detected).to eq nil
       expect(res.detect_language).to be false
 
       opts = { language: 'deu' }
       res = subject.find_names('Pardosa moesta is a spider', opts)
       expect(res.language).to eq 'deu'
-      expect(res.language_detected).to eq ''
+      expect(res.language_detected).to eq nil
       expect(res.detect_language).to be false
     end
 
     it 'silently ignores unknown language' do
       res = subject.find_names('Pardosa moesta is a spider')
       expect(res.language).to eq 'eng'
-      expect(res.language_detected).to eq ''
+      expect(res.language_detected).to eq nil
       expect(res.detect_language).to be false
 
       opts = { language: 'whatisit' }
       res = subject.find_names('Pardosa moesta is a spider', opts)
       expect(res.language).to eq 'eng'
-      expect(res.language_detected).to eq ''
+      expect(res.language_detected).to eq nil
       expect(res.detect_language).to be false
     end
 
     it 'supports detect_language option' do
       res = subject.find_names('Pardosa moesta is a spider')
       expect(res.language).to eq 'eng'
-      expect(res.language_detected).to eq ''
+      expect(res.language_detected).to eq nil
       expect(res.detect_language).to be false
 
-      opts = { detect_language: true }
+      opts = { language: 'detect' }
       res = subject.find_names(
         'Pardosa moesta это латинское название одного паука', opts
       )
@@ -108,14 +98,15 @@ describe Gnfinder::Client do
       expect(res.language_detected).to eq 'rus'
       expect(res.detect_language).to be true
 
-      opts = { detect_language: true }
+      opts = { language: 'detect' }
       res = subject.find_names(
         'Pardosa moesta ist ein lateinischer Name für eine kleine Spinne', opts
       )
       expect(res.language).to eq 'deu'
       expect(res.language_detected).to eq 'deu'
       expect(res.detect_language).to be true
-      opts = { detect_language: true }
+
+      opts = { language: 'detect' }
       res = subject.find_names(
         'Pardosa moesta это латинское название одного паука', opts
       )
@@ -125,7 +116,7 @@ describe Gnfinder::Client do
     end
 
     it 'supports tokens around option' do
-      opts = { tokens_around: 2 }
+      opts = { words_around: 2 }
       names = subject.find_names(
         'It is very interesting that Pardosa moesta is a spider', opts
       ).names
@@ -136,25 +127,23 @@ describe Gnfinder::Client do
     it 'supports verification option' do
       opts = { verification: true }
       names = subject.find_names('Pardosa moesta is a spider', opts).names
-      expect(names[0].verification.best_result.match_type).to eq :EXACT
+      expect(names[0].verification.best_result.match_type).to eq 'Exact'
       expect(names[0].verification.best_result.matched_cardinality).to eq 2
     end
 
     it 'supports verification with sources' do
-      opts = { verification: true, sources: [1, 4] }
+      opts = { verification: true, sources: [1] }
       names = subject.find_names('Pardosa moesta is a spider', opts).names
-      expect(names[0].verification.preferred_results[0].data_source_title)
+      expect(names[0].verification.preferred_results[0].data_source_title_short)
         .to eq 'Catalogue of Life'
-      expect(names[0].verification.preferred_results[1].data_source_title)
-        .to eq 'NCBI'
-      expect(names[0].verification.best_result.data_source_title)
+      expect(names[0].verification.best_result.data_source_title_short)
         .to eq 'Catalogue of Life'
     end
 
     it 'returns the position of a name in a text' do
       names = subject.find_names('Pardosa moesta is a spider').names
-      expect(names[0].offset_start).to eq 0
-      expect(names[0].offset_end).to eq 14
+      expect(names[0].start).to eq 0
+      expect(names[0].end).to eq 14
     end
 
     it 'works with utf8 text' do
@@ -170,11 +159,11 @@ describe Gnfinder::Client do
 
     it 'gets metadata' do
       res = subject.find_names('Pardosa moesta is a very interesting spider')
-      expect(res.date).to match(/[\d]{4}/)
+      expect(res.date).to match(/\d{4}/)
       expect(res.language).to eq 'eng'
-      expect(res.language_detected).to eq ''
+      expect(res.language_detected).to eq nil
       expect(res.detect_language).to eq false
-      expect(res.total_tokens).to be 7
+      expect(res.total_words).to be 7
       expect(res.total_candidates).to be 1
       expect(res.total_names).to be 1
     end
@@ -183,7 +172,7 @@ describe Gnfinder::Client do
       opts = { language: 'deu' }
       res = subject
             .find_names('Pardosa moesta is a very interesting spider', opts)
-      expect(res.language_detected).to eq ''
+      expect(res.language_detected).to eq nil
       expect(res.detect_language).to eq false
       expect(res.language).to eq 'deu'
     end
@@ -192,8 +181,8 @@ describe Gnfinder::Client do
       opts = { language: 'German' }
       res = subject
             .find_names('Pardosa moesta is a very interesting spider', opts)
-      expect(res.finder_version).to match(/^v\d+\.\d+\.\d+/)
-      expect(res.language_detected).to eq ''
+      expect(res.gnfinder_version).to match(/^v\d+\.\d+\.\d+/)
+      expect(res.language_detected).to eq nil
       expect(res.detect_language).to eq false
       expect(res.language).to eq 'eng'
     end

@@ -20,12 +20,12 @@ Gem::Specification.new do |gem|
                       .reject { |f| f.match(%r{^(test|spec|features)/}) }
 
   gem.require_paths = ['lib']
-  gem.required_ruby_version = '~> 2.6'
-  gem.add_dependency 'grpc', '~> 1.28'
-  gem.add_dependency 'grpc-tools', '~> 1.28'
-  gem.add_development_dependency 'bundler', '~> 2.1'
+  gem.required_ruby_version = '~> 3.0'
+  gem.add_dependency 'rest-client', '~> 2.1'
+  gem.add_development_dependency 'bundler', '~> 2.2'
   gem.add_development_dependency 'byebug', '~> 11.1'
   gem.add_development_dependency 'rake', '~> 13.0'
-  gem.add_development_dependency 'rspec', '~> 3.9'
-  gem.add_development_dependency 'rubocop', '~> 0.82'
+  gem.add_development_dependency 'rspec', '~> 3.10'
+  gem.add_development_dependency 'rubocop', '~> 1.20'
+  gem.add_development_dependency 'solargraph', '~> 0.43'
 end

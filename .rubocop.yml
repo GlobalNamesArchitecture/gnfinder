@@ -1,6 +1,6 @@
 AllCops:
   NewCops: disable
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 3.0
   Exclude:
     - 'lib/protob_pb.rb'
     - 'lib/protob_services_pb.rb'
