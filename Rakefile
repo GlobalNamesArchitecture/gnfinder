@@ -24,16 +24,7 @@ RSpec::Core::RakeTask.new(:rcov) do |spec|
   spec.rcov = true
 end
 
-task :grpc do
-  cmd = 'grpc_tools_ruby_protoc ' \
-    '-I $GOPATH/src/github.com/gnames/gnfinder/protob ' \
-        '--ruby_out=lib --grpc_out=lib ' \
-        '$GOPATH/src/github.com/gnames/gnfinder/protob/protob.proto'
-  puts cmd
-  `#{cmd}`
-end
-
 require 'rubocop/rake_task'
 RuboCop::RakeTask.new
 
-task default: %i[rubocop grpc spec]
+task default: %i[rubocop spec]
