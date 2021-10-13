@@ -1,10 +1,10 @@
 # gnfinder
 
-Ruby gem to access functionality of [gnfinder] project written in Go. This gem
+Ruby gem to access functionality of [GNfinder] project written in Go. This gem
 allows to perform fast and accurate scientific name finding in UTF-8 encoded
 plain texts for Ruby-based projects.
 
-- [gnfinder](#gnfinder)
+- [GNfinder](#gnfinder)
   - [Requirements](#requirements)
   - [Installation](#installation)
   - [Usage](#usage)
@@ -19,12 +19,12 @@ plain texts for Ruby-based projects.
 
 ## Requirements
 
-This gem uses gRPC to access a running [gnfinder] server. You can find how
-to run it in [gnfinder] README file.
+This gem uses REST API to access a running [GNfinder] server. You can find how
+to run it in [GNfinder] README file.
 
 ## Installation
 
-To use the gem from Ruby proect install it using Gemfile, or manually:
+To use the gem from a Ruby proect install it using Gemfile, or manually:
 
 ```bash
 gem install gnfinder
@@ -32,10 +32,10 @@ gem install gnfinder
 
 ## Usage
 
-The purpose of this gem is to access [gnfinder] functionality out of Ruby
+The purpose of this gem is to access [GNfinder] functionality from Ruby
 applications. If you need to find names using other languages, use the
 [source code][client] of this gem for reference. For other usages read
-the original Go-lang [gnfinder] README file.
+the original Go-lang [GNfinder] README file.
 
 First you need to create a instance of a `gnfinder` client
 
@@ -63,12 +63,24 @@ gf = Gnfinder::Client.new(host = '0.0.0.0', port = 8000)
 
 ### Finding names in a text using default settings
 
-You can find format of returning result in [proto file] or in [tests]
+You can find format of returning result in [GNfinder API docs]
 
 ```ruby
 txt = File.read('utf8-text-with-names.txt')
 
 res = gf.find_names(txt)
+puts res.names[0].value
+puts res.names[0].odds
+```
+
+### Finding names by a URL
+
+If you need to find names in an HTML page, or a PDF document available on
+Internet, use `find_url` method.
+
+```ruby
+url = 'https://en.wikipedia.org/wiki/Monochamus_galloprovincialis'
+res = gf.find_url(url)
 puts res.names[0].value
 puts res.names[0].odds
 ```
@@ -173,21 +185,6 @@ res = gf.find_names(txt, language: 'eng', sources: [1, 4, 179])
 
 ## Development
 
-This gem uses gRPC to access [gnfinder] server. gRPC in turn depends on a
-protobuf library. If you need to compile Ruby programs with protobuf you need
-to install [Go] language and download [gnfinder] project.
-
-```bash
-go get github.com/gnames/gnfinder
-```
-Then you need to run bundle from the root of the project and generate
-grpc files:
-
-```bash
-bundle
-rake grpc
-```
-
 If you get an error, you might need to set a ``GOPATH`` environment variable.
 
 After starting the server with default host and port (localhost:8778) you will
@@ -208,10 +205,10 @@ To run tests without rubocop
 bundle exec rspec
 ```
 
-[gnfinder]: https://github.com/gnames/gnfinder
+[GNfinder]: https://github.com/gnames/gnfinder
 [gnfinder recent release]: https://github.com/gnames/gnfinder/releases
 [Go]: https://golang.org/doc/install
 [client]: https://github.com/GlobalNamesArchitecture/gnfinder/blob/master/lib/gnfinder/client.rb
 [data-source list]: http://index.globalnames.org/datasource
-[proto file]: https://github.com/GlobalNamesArchitecture/gnfinder/blob/master/lib/protob_pb.rb
 [tests]: https://github.com/GlobalNamesArchitecture/gnfinder/blob/master/spec/lib/client_spec.rb
+[GNfinder API docs]: https://apidoc.globalnames.org/gnfinder

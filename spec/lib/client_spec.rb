@@ -16,6 +16,22 @@ describe Gnfinder::Client do
     end
   end
 
+  describe '#find_url' do
+    it 'gets metadata about results' do
+      res = subject.find_url('https://example.com')
+      expect(res.words_around).to eq 0
+      opts = { words_around: 2 }
+      res = subject.find_url('https://example.com', opts)
+      expect(res.words_around).to eq 2
+    end
+
+    it 'returns list of name_strings' do
+      names = subject.find_url('https://en.wikipedia.org/wiki/Monochamus_galloprovincialis').names
+      expect(names[0].name).to eq 'Monochamus galloprovincialis'
+      expect(names[0].cardinality).to eq 2
+    end
+  end
+
   describe '#find_names' do
     it 'gets metadata about results' do
       res = subject.find_names('Pardosa moesta is a spider')

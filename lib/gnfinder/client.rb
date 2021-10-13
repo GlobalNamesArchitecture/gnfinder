@@ -21,13 +21,24 @@ module Gnfinder
       @site['/ping'].get.body
     end
 
-    # rubocop:disable all
+    def find_url(url, opts = {})
+      return to_open_struct({ "names": [] }) if url.to_s.strip == ''
+
+      params = { url: url }
+      find(params, opts)
+    end
+
     def find_names(text, opts = {})
-      if text.to_s.strip == ''
-        return to_open_struct({ "names": [] })
-      end
+      return to_open_struct({ "names": [] }) if text.to_s.strip == ''
 
       params = { text: text }
+      find(params, opts)
+    end
+
+    private
+
+    # rubocop:disable all
+    def find(params, opts = {})
       params[:noBayes] = true if opts[:no_bayes]
       params[:oddsDetails] = true if opts[:odds_details]
       params[:language] = opts[:language] if opts[:language].to_s.strip != ''
@@ -53,8 +64,6 @@ module Gnfinder
       to_open_struct(res)
     end
     # rubocop:enable all
-
-    private
 
     def to_open_struct(obj)
       case obj

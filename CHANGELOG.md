@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [v0.15.5]
+
+- Add [#16]: Search names using URL.
+
 ## [v0.15.4]
 
 - Add [#14]: Compatibility with gnfider v0.15.4, switching to REST API.

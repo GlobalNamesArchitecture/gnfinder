@@ -3,7 +3,7 @@
 # Gnfinder is a namespace module for gndinfer gem.
 module Gnfinder
   # Version corresponds to the minimal supported version of Go gnfinder
-  VERSION = '0.15.4.1'
+  VERSION = '0.15.5'
 
   def self.version
     VERSION
