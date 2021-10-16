@@ -21,6 +21,15 @@ module Gnfinder
       @site['/ping'].get.body
     end
 
+    def find_file(path, opts = {})
+      params = {}
+      update_params(params, opts)
+      file = File.new(path, 'rb')
+      params = params.merge(file: file)
+      resp = @site['find'].post(params)
+      prepare_result(resp)
+    end
+
     def find_url(url, opts = {})
       return to_open_struct({ "names": [] }) if url.to_s.strip == ''
 
@@ -39,29 +48,33 @@ module Gnfinder
 
     # rubocop:disable all
     def find(params, opts = {})
+      update_params(params, opts)
+
+      resp = @site['find'].post params.to_json, {content_type: :json, accept: :json}
+      prepare_result(resp)
+    end
+    # rubocop:enable all
+
+    def prepare_result(response)
+      output = JSON.parse(response.body)
+      res = output['metadata']
+      res['names'] = output['names'] || []
+      res = res.deep_transform_keys(&:underscore)
+      res['names'] = [] if res['names'].nil?
+      to_open_struct(res)
+    end
+
+    # rubocop:disable all
+    def update_params(params, opts)
       params[:noBayes] = true if opts[:no_bayes]
       params[:oddsDetails] = true if opts[:odds_details]
       params[:language] = opts[:language] if opts[:language].to_s.strip != ''
 
-      if opts[:words_around] && opts[:words_around] > 0
-        params[:wordsAround] = opts[:words_around]
-      end
+      params[:wordsAround] = opts[:words_around] if opts[:words_around] && opts[:words_around].positive?
 
       params[:verification] = true if opts[:verification]
 
-      if opts[:sources] && !opts[:sources].empty?
-        params[:sources] = opts[:sources]
-      end
-
-      res = @site['find'].post params.to_json, {content_type: :json, accept: :json}
-      output = JSON.parse(res.body)
-      res = output["metadata"]
-      res["names"] = output["names"] || []
-      res = res.deep_transform_keys(&:underscore)
-      if res["names"].nil?
-        res["names"] = []
-      end
-      to_open_struct(res)
+      params[:sources] = opts[:sources] if opts[:sources] && !opts[:sources].empty?
     end
     # rubocop:enable all
 

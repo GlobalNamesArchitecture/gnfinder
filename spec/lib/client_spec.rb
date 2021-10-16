@@ -3,6 +3,7 @@
 # Gnfinder is a namespace module for gndinfer gem.
 describe Gnfinder::Client do
   let(:subject) { Gnfinder::Client.new }
+  # let(:subject) { Gnfinder::Client.new(host = '0.0.0.0', port = 8080) }
 
   describe '#ping' do
     it 'connects to the server' do
@@ -13,6 +14,107 @@ describe Gnfinder::Client do
   describe '#version' do
     it 'returns version of Go gnfinder' do
       expect(subject.gnfinder_version.version).to match(/^v\d+\.\d+\.\d+/)
+    end
+  end
+
+  describe '#find_file' do
+    dir = File.absolute_path(__dir__)
+    path = File.join(dir, '..', 'files', 'test.txt')
+
+    it 'returns list of name_strings' do
+      names = subject.find_file(path).names
+      expect(names[0].name).to eq 'Monochamus galloprovincialis'
+      expect(names[0].cardinality).to eq 2
+    end
+
+    it 'works with images' do
+      img = File.join(dir, '..', 'files', 'image.jpg')
+      names = subject.find_file(img).names
+      expect(names[0].name).to eq 'Baccha'
+      expect(names[0].cardinality).to eq 1
+    end
+
+    it 'works with images' do
+      pdf = File.join(dir, '..', 'files', 'file.pdf')
+      names = subject.find_file(pdf).names
+      expect(names[0].name).to eq 'Passiflora'
+      expect(names[0].cardinality).to eq 1
+    end
+
+    it 'supports no_bayes option' do
+      names1 = subject.find_file(path).names
+      opts = { no_bayes: true }
+      names2 = subject.find_file(path, opts).names
+      expect(names1.size).to be > names2.size
+    end
+
+    it 'supports language option' do
+      res = subject.find_file(path)
+      expect(res.language).to eq 'eng'
+      expect(res.language_detected).to eq nil
+      expect(res.detect_language).to be false
+
+      opts = { language: 'deu' }
+      res = subject.find_file(path, opts)
+      expect(res.language).to eq 'deu'
+      expect(res.language_detected).to eq nil
+      expect(res.detect_language).to be false
+    end
+
+    it 'silently ignores unknown language' do
+      res = subject.find_file(path)
+      expect(res.language).to eq 'eng'
+      expect(res.language_detected).to eq nil
+      expect(res.detect_language).to be false
+
+      opts = { language: 'whatisit' }
+      res = subject.find_file(path, opts)
+      expect(res.language).to eq 'eng'
+      expect(res.language_detected).to eq nil
+      expect(res.detect_language).to be false
+    end
+
+    it 'can detect language' do
+      opts = { language: 'detect' }
+      res = subject.find_file(path, opts)
+      expect(res.language).to eq 'eng'
+      expect(res.language_detected).to eq 'eng'
+      expect(res.detect_language).to be true
+    end
+
+    it 'supports tokens around option' do
+      opts = { words_around: 2 }
+      names = subject.find_file(path, opts).names
+      expect(names[2].words_before).to eq %w[of beetle]
+      expect(names[2].words_after).to eq %w[image Monochamus]
+    end
+
+    it 'supports verification option' do
+      opts = { verification: true }
+      names = subject.find_file(path, opts).names
+      expect(names[0].verification.best_result.match_type).to eq 'Exact'
+      expect(names[0].verification.best_result.matched_cardinality).to eq 2
+    end
+
+    it 'supports verification with sources' do
+      opts = { sources: [1, 12] }
+      names = subject.find_file(path, opts).names
+      expect(names[0].verification.preferred_results[0].data_source_title_short)
+        .to eq 'Catalogue of Life'
+      expect(names[0].verification.preferred_results[1].data_source_title_short)
+        .to eq 'EOL'
+      expect(names[0].verification.best_result.data_source_title_short)
+        .to eq 'Catalogue of Life'
+    end
+
+    it 'returns the position of a name in a text' do
+      names = subject.find_file(path).names
+      expect(names[0].start).to eq 15
+      expect(names[0].end).to eq 43
+    end
+
+    it 'breaks on wrong paths' do
+      expect { subject.find_file('wrong/path') }.to raise_error(/No such file/)
     end
   end
 

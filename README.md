@@ -1,30 +1,36 @@
 # gnfinder
 
 Ruby gem to access functionality of [GNfinder] project written in Go. This gem
-allows to perform fast and accurate scientific name finding in UTF-8 encoded
-plain texts for Ruby-based projects.
+allows to perform fast and accurate scientific name finding in texts,
+web-pages, as well as a large variety of documents. Document files can be
+accessed either locally or via a URL.
 
-- [GNfinder](#gnfinder)
-  - [Requirements](#requirements)
-  - [Installation](#installation)
-  - [Usage](#usage)
-    - [Finding names in a text using default settings](#finding-names-in-a-text-using-default-settings)
-    - [Optionally disable Bayes search](#optionally-disable-bayes-search)
-    - [Set a language for the text](#set-a-language-for-the-text)
-  - [Set automatic detection of text's language](#set-automatic-detection-of-texts-language)
-    - [Set verification option](#set-verification-option)
-    - [Set preferred data-sources list](#set-preferred-data-sources-list)
-    - [Combination of parameters.](#combination-of-parameters)
-  - [Development](#development)
+
+<!-- vim-markdown-toc GFM -->
+
+* [Requirements](#requirements)
+* [Installation](#installation)
+* [Usage](#usage)
+  * [Finding names in a text using default settings](#finding-names-in-a-text-using-default-settings)
+  * [Finding names by a URL](#finding-names-by-a-url)
+  * [Finding names in a file](#finding-names-in-a-file)
+  * [Optionally disable Bayes search](#optionally-disable-bayes-search)
+  * [Set a language for the text](#set-a-language-for-the-text)
+* [Set automatic detection of text's language](#set-automatic-detection-of-texts-language)
+  * [Set verification option](#set-verification-option)
+  * [Set preferred data-sources list](#set-preferred-data-sources-list)
+  * [Combination of parameters.](#combination-of-parameters)
+* [Development](#development)
+
+<!-- vim-markdown-toc -->
 
 ## Requirements
 
 This gem uses REST API to access a running [GNfinder] server. You can find how
-to run it in [GNfinder] README file.
+to run it in [GNfinder] README file. By default it uses
+`https://gnfinder.globalnames.org/api/v1`
 
 ## Installation
-
-To use the gem from a Ruby proect install it using Gemfile, or manually:
 
 ```bash
 gem install gnfinder
@@ -37,7 +43,7 @@ applications. If you need to find names using other languages, use the
 [source code][client] of this gem for reference. For other usages read
 the original Go-lang [GNfinder] README file.
 
-First you need to create a instance of a `gnfinder` client
+First you need to create an instance of a `gnfinder` client
 
 ```ruby
 require 'gnfinder'
@@ -45,19 +51,18 @@ require 'gnfinder'
 gf = Gnfinder::Client.new
 ```
 
-By default the client will try to connect to `localhost:8778`. If you
-have another location for the server use:
-
-
+By default the client will try to connect to
+`https://gnfinder.globalnames.org/api/v1`. If you have another location for the
+server use:
 
 ```ruby
 require 'gnfinder'
 
 # you can use global public gnfinder server
 # located at finder-rpc.globalnames.org
-gf = Gnfinder::Client.new(host = 'finder-rpc.globalnames.org', port = 80)
+gf = Gnfinder::Client.new(host = 'finder.example.org', port = 80)
 
-# localhost, different port
+# localhost, port 8000
 gf = Gnfinder::Client.new(host = '0.0.0.0', port = 8000)
 ```
 
@@ -85,7 +90,27 @@ puts res.names[0].value
 puts res.names[0].odds
 ```
 
-Returned result will have the following methods for each name:
+### Finding names in a file
+
+Many different file types are supported (PDF, JPB, TIFF, MS Word, MS Excel
+etc).
+
+```ruby
+path = "/path/to/file.pdf"
+res = gf.find_file(path)
+puts res.names[0].value
+```
+
+Support of file-uploading uses 'multipart/form' approach. Here is an 
+illustration for `curl`:
+
+```bash
+curl -v -F sources[]=1 -F sources[]=12 -F file=@file.pdf \
+    https://finder.globalnames.org/api/v1/find
+```
+
+Returned result is quite detailed and contains many accessor methods, for
+example:
 
   * value: name-string cleaned up for verification.
   * verbatim: name-string as it was found in the text.
