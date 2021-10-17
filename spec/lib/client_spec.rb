@@ -97,12 +97,10 @@ describe Gnfinder::Client do
     end
 
     it 'supports verification with sources' do
-      opts = { sources: [1, 12] }
+      opts = { sources: [1] }
       names = subject.find_file(path, opts).names
       expect(names[0].verification.preferred_results[0].data_source_title_short)
         .to eq 'Catalogue of Life'
-      expect(names[0].verification.preferred_results[1].data_source_title_short)
-        .to eq 'EOL'
       expect(names[0].verification.best_result.data_source_title_short)
         .to eq 'Catalogue of Life'
     end
