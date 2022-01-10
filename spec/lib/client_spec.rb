@@ -99,7 +99,7 @@ describe Gnfinder::Client do
     it 'supports verification with sources' do
       opts = { sources: [1] }
       names = subject.find_file(path, opts).names
-      expect(names[0].verification.preferred_results[0].data_source_title_short)
+      expect(names[0].verification.results[0].data_source_title_short)
         .to eq 'Catalogue of Life'
       expect(names[0].verification.best_result.data_source_title_short)
         .to eq 'Catalogue of Life'
@@ -249,8 +249,9 @@ describe Gnfinder::Client do
 
     it 'supports verification with sources' do
       opts = { verification: true, sources: [1] }
-      names = subject.find_names('Pardosa moesta is a spider', opts).names
-      expect(names[0].verification.preferred_results[0].data_source_title_short)
+      res = subject.find_names('Pardosa moesta is a spider', opts)
+      names = res.names
+      expect(names[0].verification.results[0].data_source_title_short)
         .to eq 'Catalogue of Life'
       expect(names[0].verification.best_result.data_source_title_short)
         .to eq 'Catalogue of Life'

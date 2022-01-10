@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [v0.17.0]
+
+- Update to gnfinder v0.17.0
+
 ## [v0.15.5]
 
 - Add [#16]: Search names using URL.
