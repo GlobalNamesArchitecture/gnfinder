@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [v0.18.0]
+
+- Bring tests in accordance to API changes in v0.18.0
+
 ## [v0.17.0]
 
 - Update to gnfinder v0.17.0
@@ -27,6 +31,7 @@
 - Fix [#7]: utf-8 diacritics support in input text fails.
 
 ## [v0.1.1]
+
 - Add [#6]: return start and end of names-strings.
 
 ## [v0.1.0]
@@ -41,7 +46,10 @@
 
 This document follows [changelog guidelines]
 
-[v0.15.4]: https://github.com/GlobalNamesArchitecture/gnfinder/compare/v0.1.0...v0.15.4
+[v0.18.0]: https://github.com/GlobalNamesArchitecture/gnfinder/compare/v0.17.0...v0.18.0
+[v0.17.0]: https://github.com/GlobalNamesArchitecture/gnfinder/compare/v0.15.5...v0.17.0
+[v0.15.5]: https://github.com/GlobalNamesArchitecture/gnfinder/compare/v0.15.4...v0.15.5
+[v0.15.4]: https://github.com/GlobalNamesArchitecture/gnfinder/compare/v0.2.0...v0.15.4
 [v0.2.0]: https://github.com/GlobalNamesArchitecture/gnfinder/compare/v0.1.3...v0.2.0
 [v0.1.3]: https://github.com/GlobalNamesArchitecture/gnfinder/compare/v0.1.2...v0.1.3
 [v0.1.2]: https://github.com/GlobalNamesArchitecture/gnfinder/compare/v0.1.1...v0.1.2
