@@ -52,26 +52,26 @@ describe Gnfinder::Client do
       res = subject.find_file(path)
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq nil
-      expect(res.detect_language).to be false
+      expect(res.with_language_detection).to be false
 
       opts = { language: 'deu' }
       res = subject.find_file(path, opts)
       expect(res.language).to eq 'deu'
       expect(res.language_detected).to eq nil
-      expect(res.detect_language).to be false
+      expect(res.with_language_detection).to be false
     end
 
     it 'silently ignores unknown language' do
       res = subject.find_file(path)
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq nil
-      expect(res.detect_language).to be false
+      expect(res.with_language_detection).to be false
 
       opts = { language: 'whatisit' }
       res = subject.find_file(path, opts)
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq nil
-      expect(res.detect_language).to be false
+      expect(res.with_language_detection).to be false
     end
 
     it 'can detect language' do
@@ -79,7 +79,7 @@ describe Gnfinder::Client do
       res = subject.find_file(path, opts)
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq 'eng'
-      expect(res.detect_language).to be true
+      expect(res.with_language_detection).to be true
     end
 
     it 'supports tokens around option' do
@@ -99,8 +99,8 @@ describe Gnfinder::Client do
     it 'supports verification with sources' do
       opts = { sources: [1] }
       names = subject.find_file(path, opts).names
-      expect(names[0].verification.results[0].data_source_title_short)
-        .to eq 'Catalogue of Life'
+      expect(names[0].verification.results)
+        .to be_nil
       expect(names[0].verification.best_result.data_source_title_short)
         .to eq 'Catalogue of Life'
     end
@@ -178,33 +178,33 @@ describe Gnfinder::Client do
       res = subject.find_names('Pardosa moesta is a spider')
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq nil
-      expect(res.detect_language).to be false
+      expect(res.with_language_detection).to be false
 
       opts = { language: 'deu' }
       res = subject.find_names('Pardosa moesta is a spider', opts)
       expect(res.language).to eq 'deu'
       expect(res.language_detected).to eq nil
-      expect(res.detect_language).to be false
+      expect(res.with_language_detection).to be false
     end
 
     it 'silently ignores unknown language' do
       res = subject.find_names('Pardosa moesta is a spider')
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq nil
-      expect(res.detect_language).to be false
+      expect(res.with_language_detection).to be false
 
       opts = { language: 'whatisit' }
       res = subject.find_names('Pardosa moesta is a spider', opts)
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq nil
-      expect(res.detect_language).to be false
+      expect(res.with_language_detection).to be false
     end
 
     it 'supports detect_language option' do
       res = subject.find_names('Pardosa moesta is a spider')
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq nil
-      expect(res.detect_language).to be false
+      expect(res.with_language_detection).to be false
 
       opts = { language: 'detect' }
       res = subject.find_names(
@@ -212,7 +212,7 @@ describe Gnfinder::Client do
       )
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq 'rus'
-      expect(res.detect_language).to be true
+      expect(res.with_language_detection).to be true
 
       opts = { language: 'detect' }
       res = subject.find_names(
@@ -220,7 +220,7 @@ describe Gnfinder::Client do
       )
       expect(res.language).to eq 'deu'
       expect(res.language_detected).to eq 'deu'
-      expect(res.detect_language).to be true
+      expect(res.with_language_detection).to be true
 
       opts = { language: 'detect' }
       res = subject.find_names(
@@ -228,7 +228,7 @@ describe Gnfinder::Client do
       )
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq 'rus'
-      expect(res.detect_language).to be true
+      expect(res.with_language_detection).to be true
     end
 
     it 'supports tokens around option' do
@@ -251,8 +251,8 @@ describe Gnfinder::Client do
       opts = { verification: true, sources: [1] }
       res = subject.find_names('Pardosa moesta is a spider', opts)
       names = res.names
-      expect(names[0].verification.results[0].data_source_title_short)
-        .to eq 'Catalogue of Life'
+      expect(names[0].verification.results)
+        .to be_nil
       expect(names[0].verification.best_result.data_source_title_short)
         .to eq 'Catalogue of Life'
     end
@@ -279,9 +279,9 @@ describe Gnfinder::Client do
       expect(res.date).to match(/\d{4}/)
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq nil
-      expect(res.detect_language).to eq false
+      expect(res.with_language_detection).to eq false
       expect(res.total_words).to be 7
-      expect(res.total_candidates).to be 1
+      expect(res.total_name_candidates).to be 1
       expect(res.total_names).to be 1
     end
 
@@ -290,7 +290,7 @@ describe Gnfinder::Client do
       res = subject
             .find_names('Pardosa moesta is a very interesting spider', opts)
       expect(res.language_detected).to eq nil
-      expect(res.detect_language).to eq false
+      expect(res.with_language_detection).to eq false
       expect(res.language).to eq 'deu'
     end
 
@@ -300,7 +300,7 @@ describe Gnfinder::Client do
             .find_names('Pardosa moesta is a very interesting spider', opts)
       expect(res.gnfinder_version).to match(/^v\d+\.\d+\.\d+/)
       expect(res.language_detected).to eq nil
-      expect(res.detect_language).to eq false
+      expect(res.with_language_detection).to eq false
       expect(res.language).to eq 'eng'
     end
   end
