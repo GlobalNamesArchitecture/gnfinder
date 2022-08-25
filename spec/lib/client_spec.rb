@@ -52,26 +52,26 @@ describe Gnfinder::Client do
       res = subject.find_file(path)
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq nil
-      expect(res.with_language_detection).to be false
+      expect(res.with_language_detection).to be nil
 
       opts = { language: 'deu' }
       res = subject.find_file(path, opts)
       expect(res.language).to eq 'deu'
       expect(res.language_detected).to eq nil
-      expect(res.with_language_detection).to be false
+      expect(res.with_language_detection).to be nil
     end
 
     it 'silently ignores unknown language' do
       res = subject.find_file(path)
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq nil
-      expect(res.with_language_detection).to be false
+      expect(res.with_language_detection).to be nil
 
       opts = { language: 'whatisit' }
       res = subject.find_file(path, opts)
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq nil
-      expect(res.with_language_detection).to be false
+      expect(res.with_language_detection).to be nil
     end
 
     it 'can detect language' do
@@ -178,33 +178,33 @@ describe Gnfinder::Client do
       res = subject.find_names('Pardosa moesta is a spider')
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq nil
-      expect(res.with_language_detection).to be false
+      expect(res.with_language_detection).to be nil
 
       opts = { language: 'deu' }
       res = subject.find_names('Pardosa moesta is a spider', opts)
       expect(res.language).to eq 'deu'
       expect(res.language_detected).to eq nil
-      expect(res.with_language_detection).to be false
+      expect(res.with_language_detection).to be nil
     end
 
     it 'silently ignores unknown language' do
       res = subject.find_names('Pardosa moesta is a spider')
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq nil
-      expect(res.with_language_detection).to be false
+      expect(res.with_language_detection).to be nil
 
       opts = { language: 'whatisit' }
       res = subject.find_names('Pardosa moesta is a spider', opts)
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq nil
-      expect(res.with_language_detection).to be false
+      expect(res.with_language_detection).to be nil
     end
 
     it 'supports detect_language option' do
       res = subject.find_names('Pardosa moesta is a spider')
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq nil
-      expect(res.with_language_detection).to be false
+      expect(res.with_language_detection).to be nil
 
       opts = { language: 'detect' }
       res = subject.find_names(
@@ -279,7 +279,7 @@ describe Gnfinder::Client do
       expect(res.date).to match(/\d{4}/)
       expect(res.language).to eq 'eng'
       expect(res.language_detected).to eq nil
-      expect(res.with_language_detection).to eq false
+      expect(res.with_language_detection).to eq nil
       expect(res.total_words).to be 7
       expect(res.total_name_candidates).to be 1
       expect(res.total_names).to be 1
@@ -290,7 +290,7 @@ describe Gnfinder::Client do
       res = subject
             .find_names('Pardosa moesta is a very interesting spider', opts)
       expect(res.language_detected).to eq nil
-      expect(res.with_language_detection).to eq false
+      expect(res.with_language_detection).to eq nil
       expect(res.language).to eq 'deu'
     end
 
@@ -300,7 +300,7 @@ describe Gnfinder::Client do
             .find_names('Pardosa moesta is a very interesting spider', opts)
       expect(res.gnfinder_version).to match(/^v\d+\.\d+\.\d+/)
       expect(res.language_detected).to eq nil
-      expect(res.with_language_detection).to eq false
+      expect(res.with_language_detection).to eq nil
       expect(res.language).to eq 'eng'
     end
   end
