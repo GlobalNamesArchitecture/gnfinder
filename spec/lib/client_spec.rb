@@ -86,7 +86,7 @@ describe Gnfinder::Client do
       opts = { words_around: 2 }
       names = subject.find_file(path, opts).names
       expect(names[2].words_before).to eq %w[of beetle]
-      expect(names[2].words_after).to eq %w[image Monochamus]
+      expect(names[2].words_after).to eq ['[image:', 'Monochamus']
     end
 
     it 'supports verification option' do

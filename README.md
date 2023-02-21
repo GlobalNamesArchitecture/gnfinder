@@ -28,7 +28,7 @@ accessed either locally or via a URL.
 
 This gem uses REST API to access a running [GNfinder] server. You can find how
 to run it in [GNfinder] README file. By default it uses
-`https://gnfinder.globalnames.org/api/v1`
+`https://finder.globalnames.org/api/v1`
 
 ## Installation
 
@@ -52,7 +52,7 @@ gf = Gnfinder::Client.new
 ```
 
 By default the client will try to connect to
-`https://gnfinder.globalnames.org/api/v1`. If you have another location for the
+`https://finder.globalnames.org/api/v1`. If you have another location for the
 server use:
 
 ```ruby

@@ -3,7 +3,7 @@
 module Gnfinder
   # Gnfinder::Client connects to gnfinder server
   class Client
-    def initialize(host = 'https://gnfinder.globalnames.org', port = '')
+    def initialize(host = 'https://finder.globalnames.org', port = '')
       api_path = '/api/v1'
       url = host + api_path
       url = "#{host}:#{port}#{api_path}" if port.to_s != ''
